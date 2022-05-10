@@ -1,8 +1,3 @@
-# Tarea 1
-
-1 Agregar un input a la lista de tareas. (ID)
-2 El comportamiento debe ser igual al estado título
-
 # Tarea 2
 
 1 Crear un formulario en React con los campos
