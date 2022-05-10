@@ -13,7 +13,7 @@ const Counter = (props) => {
     <div className="counterContainer">
       <span className="counterText">Counter is now in: {count}</span>
       <button onClick={increment} className="counterButton">
-        Increment Counter
+        Increment
       </button>
     </div>
   );
