@@ -17,6 +17,9 @@ const Nav = () => {
           <li>
             <Link to="/tree-image">Show or hide</Link>
           </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
         </ul>
       </div>
     </>

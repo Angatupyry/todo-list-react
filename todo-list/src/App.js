@@ -13,13 +13,13 @@ function App() {
     <div>
       <main>
         <h1>Lista de tareas</h1>
-        {/* <First name="you" /> */}
+        <First name="you" />
         <User />
-        {/* <CounterWithUseEffect />
+        <CounterWithUseEffect />
         <Router>
           <Nav />
           <RoutesApp />
-        </Router> */}
+        </Router>
         <footer> Soy un footer pequeñito</footer>
       </main>
     </div>

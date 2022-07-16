@@ -12,7 +12,6 @@ const User = () => {
           `https://jsonplaceholder.typicode.com/posts?_limit=10`
         );
 
-        console.log(response);
         if (!response.ok) {
           throw new Error(`Hubo un error en el servidor`);
         }

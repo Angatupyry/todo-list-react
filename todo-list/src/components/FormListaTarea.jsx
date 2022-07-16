@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ListaTareas from "./ListaTareas";
 const tareasIniciales = [
   { id: 1, titulo: "Ir al cine", prioridad: "prioridad-baja" },
-  { id: 2, titulo: "Pasear el perro", prioridad: "prioridad-alta" },
-  { id: 3, titulo: "Comprar fruta", prioridad: "prioridad-media" },
-  { id: 4, titulo: "Tomar agua", prioridad: "prioridad-alta" },
+  // { id: 2, titulo: "Pasear el perro", prioridad: "prioridad-alta" },
+  // { id: 3, titulo: "Comprar fruta", prioridad: "prioridad-media" },
+  // { id: 4, titulo: "Tomar agua", prioridad: "prioridad-alta" },
 ];
 
 const FormListaTarea = (props) => {
   const [tareas, setTareas] = useState(tareasIniciales);
-  const [nuevaTarea, setNuevaTarea] = useState({
+  const [newTask, setNewTask] = useState({
     id: Math.floor(Math.random() * 100),
     titulo: "",
     prioridad: "prioridad-baja",
@@ -20,29 +20,53 @@ const FormListaTarea = (props) => {
     titulo: false,
   });
 
+  useEffect(() => {
+    cargarTareas();
+  }, []);
+
+  const cargarTareas = async () => {
+    try {
+      const token = localStorage.getItem("jwt");
+      const respuesta = await fetch("http://localhost:4000/tareas", {
+        headers: {
+          "auth-token": token,
+        },
+      });
+
+      if (!respuesta.ok) {
+        throw new Error("Error en el servidor");
+      }
+
+      const tareasFetch = await respuesta.json();
+
+      setTareas(tareasFetch.tareas);
+    } catch (error) {
+      console.log("No se pudo conectar con el backend");
+    }
+  };
+
   const obtenerValorInput = (e) => {
-    setNuevaTarea({
-      ...nuevaTarea,
+    setNewTask({
+      ...newTask,
       titulo: e.target.value,
-      prioridad: "prioridad-alta",
     });
   };
 
   const addTask = (e) => {
     const newErrors = {};
 
-    if (!nuevaTarea.titulo) {
+    if (!newTask.titulo) {
       newErrors.titulo = true;
       setErrors(newErrors);
       e.preventDefault();
       return;
     }
 
-    const newTasks = [...tareas, nuevaTarea];
+    const newTasks = [...tareas, newTask];
 
     setTareas(newTasks);
 
-    setNuevaTarea({ id: "", titulo: "" });
+    setNewTask({ id: "", titulo: "" });
 
     newErrors.titulo = false;
     setErrors(newErrors);
@@ -56,7 +80,7 @@ const FormListaTarea = (props) => {
           id="tarea"
           type="text"
           name="tarea"
-          value={nuevaTarea.titulo}
+          value={newTask.titulo}
           placeholder="Descripción de la tarea"
           onChange={obtenerValorInput}
         />
